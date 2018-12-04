@@ -19,12 +19,7 @@ func main() {
 	}
 
 	for _, p := range protos {
-		fmt.Println(p)
-		out, err := exec.Command("/bin/bash", "-c", "clang-format -style=google -i "+p).Output()
-		if err != nil {
-			fmt.Printf("%s", err)
-		}
-		fmt.Printf("%s", out)
+		formatProtoFile(p)
 	}
 	fmt.Println(protos)
 }
@@ -55,4 +50,13 @@ func listFilesWithExt(root string, ext string) ([]string, error) {
 		return []string{}, err
 	}
 	return files, nil
+}
+
+func formatProtoFile(p string) {
+	fmt.Println(p)
+	out, err := exec.Command("/bin/bash", "-c", "clang-format -style=google -i "+p).Output()
+	if err != nil {
+		fmt.Printf("%s", err)
+	}
+	fmt.Printf("%s", out)
 }
